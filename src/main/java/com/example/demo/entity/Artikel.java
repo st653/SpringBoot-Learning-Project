@@ -16,12 +16,18 @@ public class Artikel {
 
     private double price;
 
+    private int stock;
+
+    private double weight;
+
     // Standard-Konstruktor
     public Artikel() {}
 
-    public Artikel(String articleName, double price) {
+    public Artikel(String articleName, double price, int stock, double weight) {
         this.articleName = articleName;
         this.price = price;
+        this.stock = stock;
+        this.weight = weight;
     }
 
     // Getter und Setter
@@ -47,5 +53,21 @@ public class Artikel {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 }
