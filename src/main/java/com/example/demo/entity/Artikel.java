@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,19 +12,19 @@ public class Artikel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonProperty("articleName")
     private String articleName;
-
-    private double price;
-
-    private int stock;
-
-    private double weight;
+    @JsonProperty("price")
+    private Double price;
+    @JsonProperty("stock")
+    private Integer stock;
+    @JsonProperty("weight")
+    private Double weight;
 
     // Standard-Konstruktor
     public Artikel() {}
 
-    public Artikel(String articleName, double price, int stock, double weight) {
+    public Artikel(String articleName, Double price, Integer stock, Double weight) {
         this.articleName = articleName;
         this.price = price;
         this.stock = stock;
@@ -47,27 +48,27 @@ public class Artikel {
         this.articleName = articleName;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 }
