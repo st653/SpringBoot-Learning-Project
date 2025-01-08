@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Artikel;
 import com.example.demo.service.ArtikelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,10 +45,10 @@ public class ArtikelController {
     }
 
     @PutMapping("/{id}")
-    public String updateArtikel(@PathVariable Long id, @RequestBody Artikel artikel) {
+    public ResponseEntity<String> updateArtikel(@PathVariable Long id, @RequestBody Artikel updatedArtikel) {
         System.out.println("New Put Request for article with id: " + id);
-        artikelService.updateArtikel(id, artikel);
-        return "Artikel mit ID " + id + " wurde aktualisiert.";
+        artikelService.updateArtikel(id, updatedArtikel);
+        return ResponseEntity.ok("Artikel aktualisiert.");
     }
 
     @PatchMapping("/{id}")

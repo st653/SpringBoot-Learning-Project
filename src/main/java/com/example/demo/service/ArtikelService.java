@@ -1,15 +1,19 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Artikel;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ArtikelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Service
 public class ArtikelService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ArtikelService.class);
     @Autowired
     private final ArtikelRepository artikelRepository;
 
@@ -33,15 +37,26 @@ public class ArtikelService {
         artikelRepository.deleteById(id);
     }
 
-    public void updateArtikel(Long id, String articleName, Double price, Integer stock, Double weight) {
-        Artikel artikel = artikelRepository.findById(id).orElse(null);
-        if (artikel != null) {
-            artikel.setArticleName(articleName);
-            artikel.setPrice(price);
-            artikel.setStock(stock);
-            artikel.setWeight(weight);
-            artikelRepository.save(artikel);
-        }
+    public void updateArtikel(Long id, Artikel updatedArtikel) {
+        artikelRepository.findById(id)
+                .map(artikel -> {
+                    // Alten Zustand anzeigen
+                    logger.info("Alter Zustand des Artikels: Name={}, Preis={}, Bestand={}, Gewicht={}",
+                            artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
+
+                    // Artikel aktualisieren
+                    artikel.setArticleName(updatedArtikel.getArticleName());
+                    artikel.setPrice(updatedArtikel.getPrice());
+                    artikel.setStock(updatedArtikel.getStock());
+                    artikel.setWeight(updatedArtikel.getWeight());
+
+                    // Neuen Zustand anzeigen
+                    logger.info("Neuer Zustand des Artikels: Name={}, Preis={}, Bestand={}, Gewicht={}",
+                            artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
+
+                    return artikelRepository.save(artikel);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Artikel nicht gefunden"));
     }
 
     public Artikel patchArtikel(Long id, Artikel artikelDetails) {
