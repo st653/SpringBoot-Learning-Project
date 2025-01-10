@@ -52,10 +52,10 @@ public class ArtikelController {
     }
 
     @PatchMapping("/{id}")
-    public String patchArtikel(@PathVariable Long id, Artikel artikelDetails) {
+    public ResponseEntity<String> patchArtikel(@PathVariable Long id, @RequestBody Artikel updatedArtikel) {
         System.out.println("New Patch Request for article with id: " + id);
-        artikelService.patchArtikel(id, artikelDetails);
-        return "Artikel mit ID " + id + " wurde aktualisiert.";
+        artikelService.patchArtikel(id, updatedArtikel);
+        return ResponseEntity.ok("Artikel aktualisiert.");
     }
 
 }

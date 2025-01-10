@@ -2,7 +2,7 @@
 $apiUrl = "http://localhost:8080/artikel"
 
 # Sende die GET-Anfrage
-$response = Invoke-RestMethod -Uri $apiUrl/1 -Method Get -ContentType "application/json"
+$response = Invoke-RestMethod -Uri $apiUrl -Method Get -ContentType "application/json"
 
 # Ausgabe der Antwort
 Write-Output "Gefundene Artikel:"

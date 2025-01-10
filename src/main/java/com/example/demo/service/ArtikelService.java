@@ -22,11 +22,24 @@ public class ArtikelService {
     }
 
     public Artikel erstelleArtikel(Artikel artikel) {
+        logger.info("Artikeldetails: Name={}, Preis={}, Bestand={}, Gewicht={}",
+                artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
         return artikelRepository.save(artikel);
     }
 
     public List<Artikel> alleArtikelAbrufen() {
-        return artikelRepository.findAll();
+        List<Artikel> artikelListe = artikelRepository.findAll();
+
+        if (artikelListe.isEmpty()) {
+            logger.info("Keine Artikel gefunden.");
+        } else {
+            artikelListe.forEach(artikel ->
+                    logger.info("Artikel ID: {}, Name: {}, Preis: {}, Bestand: {}, Gewicht: {}",
+                            artikel.getId(), artikel.getArticleName(), artikel.getPrice(),
+                            artikel.getStock(), artikel.getWeight()));
+        }
+
+        return artikelListe;
     }
 
     public Artikel findeArtikelNachId(Long id) {
@@ -59,24 +72,34 @@ public class ArtikelService {
                 .orElseThrow(() -> new ResourceNotFoundException("Artikel nicht gefunden"));
     }
 
-    public Artikel patchArtikel(Long id, Artikel artikelDetails) {
+    public Artikel patchArtikel(Long id, Artikel updatedArtikel) {
         return artikelRepository.findById(id)
                 .map(artikel -> {
-                    if (artikelDetails.getArticleName() != null) {
-                        artikel.setArticleName(artikelDetails.getArticleName());
+                    // Alten Zustand anzeigen
+                    logger.info("Alter Zustand des Artikels: Name={}, Preis={}, Bestand={}, Gewicht={}",
+                            artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
+
+                    // Artikel aktualisieren
+                    if (updatedArtikel.getArticleName() != null) {
+                        artikel.setArticleName(updatedArtikel.getArticleName());
                     }
-                    if (artikelDetails.getStock() != 0) {
-                        artikel.setStock(artikelDetails.getStock());
+                    if (updatedArtikel.getStock() != null) {
+                        artikel.setStock(updatedArtikel.getStock());
                     }
-                    if (artikelDetails.getPrice() != 0) {
-                        artikel.setPrice(artikelDetails.getPrice());
+                    if (updatedArtikel.getPrice() != null) {
+                        artikel.setPrice(updatedArtikel.getPrice());
                     }
-                    if (artikelDetails.getWeight() != 0) {
-                        artikel.setWeight(artikelDetails.getWeight());
+                    if (updatedArtikel.getWeight() != null) {
+                        artikel.setWeight(updatedArtikel.getWeight());
                     }
+
+                    // Neuen Zustand anzeigen
+                    logger.info("Neuer Zustand des Artikels: Name={}, Preis={}, Bestand={}, Gewicht={}",
+                            artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
+
                     return artikelRepository.save(artikel);
                 })
-                .orElseThrow(() -> new RuntimeException("Artikel nicht gefunden"));
+                .orElseThrow(() -> new ResourceNotFoundException("Artikel nicht gefunden"));
     }
 
 }
