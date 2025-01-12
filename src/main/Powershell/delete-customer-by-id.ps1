@@ -1,5 +1,5 @@
 # API-Endpoint URL
-$apiUrl = "http://localhost:8080/artikel/"
+$apiUrl = "http://localhost:8080/kunden/"
 $articleId = 1
 
 # Vollständige URL mit der Artikel-ID

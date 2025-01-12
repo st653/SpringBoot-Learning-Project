@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Kunde;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.KundeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class KundeService {
         this.kundeRepository = kundeRepository;
     }
 
-    public Kunde erstelleKunde(String name) {
-        Kunde kunde = new Kunde(name);
+    public Kunde erstelleKunde(Kunde kunde) {
+        logger.info ("Kundendetails: Name={}", kunde.getName());
         return kundeRepository.save(kunde);
     }
 
@@ -44,5 +45,41 @@ public class KundeService {
 
     public void loescheKunde(Long id) {
         kundeRepository.deleteById(id);
+    }
+
+    public void updateKunde(Long id, Kunde updatedKunde) {
+        kundeRepository.findById(id)
+                .map(kunde -> {
+                    // Alten Zustand anzeigen
+                    logger.info("Alter Zustand des Kunden: Name={}", kunde.getName());
+
+                    // Kunde aktualisieren
+                    kunde.setName(updatedKunde.getName());
+                    Kunde neuerKunde = kundeRepository.save(kunde);
+
+                    // Neuen Zustand anzeigen
+                    logger.info("Neuer Zustand des Kunden: Name={}", neuerKunde.getName());
+                    return neuerKunde;
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Kunde nicht gefunden mit ID " + id));
+    }
+
+    public void patchKunde(Long id, Kunde updatedKunde) {
+        kundeRepository.findById(id)
+                .map(kunde -> {
+                    // Alten Zustand anzeigen
+                    logger.info("Alter Zustand des Kunden: Name={}", kunde.getName());
+
+                    // Kunde aktualisieren
+                    if (updatedKunde.getName() != null) {
+                        kunde.setName(updatedKunde.getName());
+                    }
+                    Kunde neuerKunde = kundeRepository.save(kunde);
+
+                    // Neuen Zustand anzeigen
+                    logger.info("Neuer Zustand des Kunden: Name={}", neuerKunde.getName());
+                    return neuerKunde;
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Kunde nicht gefunden mit ID " + id));
     }
 }

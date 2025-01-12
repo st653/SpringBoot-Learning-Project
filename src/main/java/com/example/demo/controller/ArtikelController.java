@@ -21,7 +21,7 @@ public class ArtikelController {
 
     @PostMapping
     public Artikel neuerArtikel(@RequestBody Artikel artikel) {
-        System.out.println("New Post Request with articleName: " + artikel.getArticleName());
+        System.out.println("New article Post Request with articleName: " + artikel.getArticleName());
         return artikelService.erstelleArtikel(artikel);
     }
 
