@@ -51,10 +51,17 @@ public class KundeController {
         return "Kunde mit ID " + id + " wurde gelöscht.";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateKunde(@PathVariable Long id, @RequestBody Kunde updatedKunde) {
-        System.out.println("New Put Request for customer with id: " + id);
-        kundeService.updateKunde(id, updatedKunde);
+    @PutMapping("")
+    public ResponseEntity<String> updateKunde(@RequestBody Kunde updatedKunde) {
+        System.out.println("New Put Request for customer with id: " + updatedKunde.getId());
+        try {
+            KundeValidator.validateUpdatedInputParameter(updatedKunde);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Validation failed: " + e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        kundeService.updateKunde(updatedKunde);
         return ResponseEntity.ok("Kunde aktualisiert.");
     }
 

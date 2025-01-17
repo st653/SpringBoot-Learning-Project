@@ -13,7 +13,7 @@ public class KundeValidator {
         System.out.println("Validation successful");
     }
 
-    public static void validateUpdateedInputParameter (Kunde kunde) {
+    public static void validateUpdatedInputParameter (Kunde kunde) {
         if (kunde.getId() == null) {
             throw new IllegalArgumentException("Die Kunden-ID darf nicht null sein.");
         }

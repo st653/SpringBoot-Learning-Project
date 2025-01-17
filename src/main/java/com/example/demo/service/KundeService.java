@@ -47,21 +47,20 @@ public class KundeService {
         kundeRepository.deleteById(id);
     }
 
-    public void updateKunde(Long id, Kunde updatedKunde) {
-        kundeRepository.findById(id)
+    public void updateKunde(Kunde updatedKunde) {
+        kundeRepository.findById(updatedKunde.getId())
                 .map(kunde -> {
                     // Alten Zustand anzeigen
-                    logger.info("Alter Zustand des Kunden: Name={}", kunde.getName());
+                    logger.info("Alter Zustand des Kunden: ID={} Name={}", kunde.getId(), kunde.getName());
 
                     // Kunde aktualisieren
                     kunde.setName(updatedKunde.getName());
-                    Kunde neuerKunde = kundeRepository.save(kunde);
 
                     // Neuen Zustand anzeigen
-                    logger.info("Neuer Zustand des Kunden: Name={}", neuerKunde.getName());
-                    return neuerKunde;
+                    logger.info("Neuer Zustand des Kunden: ID={} Name={}", kunde.getId(), kunde.getName());
+                    return kundeRepository.save(kunde);
                 })
-                .orElseThrow(() -> new ResourceNotFoundException("Kunde nicht gefunden mit ID " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Kunde nicht gefunden mit ID " + updatedKunde.getId()));
     }
 
     public void patchKunde(Long id, Kunde updatedKunde) {
