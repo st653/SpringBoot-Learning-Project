@@ -65,10 +65,17 @@ public class KundeController {
         return ResponseEntity.ok("Kunde aktualisiert.");
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<String> patchKunde(@PathVariable Long id, @RequestBody Kunde updatedKunde) {
-        System.out.println("New Patch Request for customer with id: " + id);
-        kundeService.patchKunde(id, updatedKunde);
+    @PatchMapping("")
+    public ResponseEntity<String> patchKunde(@RequestBody Kunde updatedKunde) {
+        System.out.println("New Patch Request for customer with id: " + updatedKunde.getId());
+        try {
+            KundeValidator.validateUpdatedInputParameter(updatedKunde);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Validation failed: " + e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        kundeService.patchKunde(updatedKunde);
         return ResponseEntity.ok("Kunde aktualisiert.");
     }
 }
