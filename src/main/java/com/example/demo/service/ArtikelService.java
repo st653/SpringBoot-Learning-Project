@@ -50,12 +50,12 @@ public class ArtikelService {
         artikelRepository.deleteById(id);
     }
 
-    public void updateArtikel(Long id, Artikel updatedArtikel) {
-        artikelRepository.findById(id)
+    public void updateArtikel(Artikel updatedArtikel) {
+        artikelRepository.findById(updatedArtikel.getId())
                 .map(artikel -> {
                     // Alten Zustand anzeigen
-                    logger.info("Alter Zustand des Artikels: Name={}, Preis={}, Bestand={}, Gewicht={}",
-                            artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
+                    logger.info("Alter Zustand des Artikels: ID={}, Name={}, Preis={}, Bestand={}, Gewicht={}",
+                            artikel.getId(), artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
 
                     // Artikel aktualisieren
                     artikel.setArticleName(updatedArtikel.getArticleName());
@@ -64,20 +64,20 @@ public class ArtikelService {
                     artikel.setWeight(updatedArtikel.getWeight());
 
                     // Neuen Zustand anzeigen
-                    logger.info("Neuer Zustand des Artikels: Name={}, Preis={}, Bestand={}, Gewicht={}",
-                            artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
+                    logger.info("Neuer Zustand des Artikels: ID={}, Name={}, Preis={}, Bestand={}, Gewicht={}",
+                            artikel.getId(), artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
 
                     return artikelRepository.save(artikel);
                 })
                 .orElseThrow(() -> new ResourceNotFoundException("Artikel nicht gefunden"));
     }
 
-    public Artikel patchArtikel(Long id, Artikel updatedArtikel) {
-        return artikelRepository.findById(id)
+    public Artikel patchArtikel(Artikel updatedArtikel) {
+        return artikelRepository.findById(updatedArtikel.getId())
                 .map(artikel -> {
                     // Alten Zustand anzeigen
-                    logger.info("Alter Zustand des Artikels: Name={}, Preis={}, Bestand={}, Gewicht={}",
-                            artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
+                    logger.info("Alter Zustand des Artikels: ID={}, Name={}, Preis={}, Bestand={}, Gewicht={}",
+                            artikel.getId(), artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
 
                     // Artikel aktualisieren
                     if (updatedArtikel.getArticleName() != null) {
@@ -94,8 +94,8 @@ public class ArtikelService {
                     }
 
                     // Neuen Zustand anzeigen
-                    logger.info("Neuer Zustand des Artikels: Name={}, Preis={}, Bestand={}, Gewicht={}",
-                            artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
+                    logger.info("Neuer Zustand des Artikels: ID={}, Name={}, Preis={}, Bestand={}, Gewicht={}",
+                            artikel.getId(), artikel.getArticleName(), artikel.getPrice(), artikel.getStock(), artikel.getWeight());
 
                     return artikelRepository.save(artikel);
                 })

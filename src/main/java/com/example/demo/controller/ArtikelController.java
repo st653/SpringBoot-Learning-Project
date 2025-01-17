@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Artikel;
 import com.example.demo.service.ArtikelService;
+import com.example.demo.validation.ArtikelValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class ArtikelController {
     @PostMapping
     public Artikel neuerArtikel(@RequestBody Artikel artikel) {
         System.out.println("New article Post Request with articleName: " + artikel.getArticleName());
+        ArtikelValidator.validatePostInputParameter(artikel);
         return artikelService.erstelleArtikel(artikel);
     }
 
@@ -44,17 +46,32 @@ public class ArtikelController {
         return "Artikel mit ID " + id + " wurde gelöscht.";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateArtikel(@PathVariable Long id, @RequestBody Artikel updatedArtikel) {
-        System.out.println("New Put Request for article with id: " + id);
-        artikelService.updateArtikel(id, updatedArtikel);
+    @PutMapping("")
+    public ResponseEntity<String> updateArtikel(@RequestBody Artikel updatedArtikel) {
+        System.out.println("New Put Request for article with id: " + updatedArtikel.getId());
+        try {
+            ArtikelValidator.validateUpdatedInputParameter(updatedArtikel);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Validation failed: " + e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        artikelService.updateArtikel(updatedArtikel);
         return ResponseEntity.ok("Artikel aktualisiert.");
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<String> patchArtikel(@PathVariable Long id, @RequestBody Artikel updatedArtikel) {
-        System.out.println("New Patch Request for article with id: " + id);
-        artikelService.patchArtikel(id, updatedArtikel);
+    @PatchMapping("")
+    public ResponseEntity<String> patchArtikel(@RequestBody Artikel updatedArtikel) {
+        System.out.println("New Patch Request for article with id: " + updatedArtikel.getId());
+        try {
+            ArtikelValidator.validateUpdatedInputParameter(updatedArtikel);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Validation failed: " + e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        artikelService.patchArtikel(updatedArtikel);
         return ResponseEntity.ok("Artikel aktualisiert.");
     }
 

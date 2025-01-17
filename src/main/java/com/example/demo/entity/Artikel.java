@@ -8,10 +8,11 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Artikel {
-
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @JsonProperty("articleName")
     private String articleName;
     @JsonProperty("price")
