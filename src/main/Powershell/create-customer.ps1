@@ -1,19 +1,15 @@
 # API-Endpoint URL
-$apiUrl = "http://localhost:8080/kunden?name="
+$apiUrl = "http://localhost:8080/kunden"
 
-# Kundenname
-$customerName = "Mercedes Normandie"
-
-# URL-codieren des Kundennamens
-$encodedCustomerName = [System.Web.HttpUtility]::UrlEncode($customerName)
-
-# Vollständige URL mit dem 'name'-Parameter
-$fullUrl = "$apiUrl$encodedCustomerName"
+# JSON-Body für den POST-Request
+$jsonData = @{
+    name = "Maximus Musterkunde"
+} | ConvertTo-Json -Depth 1
 
 try {
-    # Sende die POST-Anfrage ohne Body, nur mit Query-Parameter
-    $response = Invoke-RestMethod -Uri $fullUrl -Method Post -ContentType "application/json"
-    Write-Output "Kunde wurde angelegt: $($response)"
+    # Sende die POST-Anfrage
+    $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Body $jsonData -ContentType "application/json"
+    Write-Output "Antwort des Servers: $($response)"
 } catch {
     Write-Output "Fehler beim Anlegen des Kunden: $_"
 }

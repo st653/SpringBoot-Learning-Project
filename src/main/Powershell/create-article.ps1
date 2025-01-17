@@ -9,8 +9,12 @@ $jsonData = @{
     weight = 3.00
 } | ConvertTo-Json -Depth 1
 
-# Sende die POST-Anfrage
-$response = Invoke-RestMethod -Uri $apiUrl -Method Post -Body $jsonData -ContentType "application/json"
-
-# Ausgabe der Antwort
-Write-Output "Artikel wurde erstellt: $response"
+try {
+    # Sende die POST-Anfrage
+    $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Body $jsonData -ContentType "application/json"
+    # Ausgabe der Antwort
+    Write-Output "Antwort des Servers: $response"
+} catch {
+    # Fehlerbehandlung
+    Write-Output "Fehler beim Anlegen des Artikels: $_"
+}

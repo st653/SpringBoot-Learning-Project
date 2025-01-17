@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Kunde;
 import com.example.demo.service.KundeService;
+import com.example.demo.validation.KundeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,15 @@ public class KundeController {
     }
 
     @PostMapping
-    public Kunde neuerKunde(@RequestParam Kunde kunde) {
+    public Kunde neuerKunde(@RequestBody Kunde kunde) {
         System.out.println("New customer Post Request with name: " + kunde.getName());
+        try {
+            KundeValidator.validatePostInputParameter(kunde);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Validation failed: " + e.getMessage());
+            return null;
+        }
         return kundeService.erstelleKunde(kunde);
     }
 

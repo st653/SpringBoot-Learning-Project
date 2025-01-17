@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Kunde {
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

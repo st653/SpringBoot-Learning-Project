@@ -74,5 +74,4 @@ public class ArtikelController {
         artikelService.patchArtikel(updatedArtikel);
         return ResponseEntity.ok("Artikel aktualisiert.");
     }
-
 }
