@@ -49,13 +49,7 @@ public class ArtikelController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> loescheArtikel(@PathVariable Long id) {
         System.out.println("New Delete Request for article with id: " + id);
-        try {
-            artikelService.loescheArtikel(id);
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println("Validation failed: " + e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        artikelService.loescheArtikel(id);
         return ResponseEntity.ok("Artikel mit ID " + id + " wurde gelöscht.");
     }
 

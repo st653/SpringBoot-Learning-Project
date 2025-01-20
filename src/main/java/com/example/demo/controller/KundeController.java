@@ -20,7 +20,7 @@ public class KundeController {
     }
 
     @PostMapping
-    public Kunde neuerKunde(@RequestBody Kunde kunde) {
+    public ResponseEntity<Kunde> neuerKunde(@RequestBody Kunde kunde) {
         System.out.println("New customer Post Request with name: " + kunde.getName());
         try {
             KundeValidator.validatePostInputParameter(kunde);
@@ -29,7 +29,8 @@ public class KundeController {
             System.out.println("Validation failed: " + e.getMessage());
             return null;
         }
-        return kundeService.erstelleKunde(kunde);
+        kundeService.erstelleKunde(kunde);
+        return ResponseEntity.ok(kunde);
     }
 
     @GetMapping
@@ -45,10 +46,10 @@ public class KundeController {
     }
 
     @DeleteMapping("/{id}")
-    public String loescheKunde(@PathVariable Long id) {
+    public ResponseEntity<String> loescheKunde(@PathVariable Long id) {
         System.out.println("New Delete Request for customer with id: " + id);
         kundeService.loescheKunde(id);
-        return "Kunde mit ID " + id + " wurde gelöscht.";
+        return ResponseEntity.ok("Kunde mit ID " + id + " wurde gelöscht.");
     }
 
     @PutMapping("")
