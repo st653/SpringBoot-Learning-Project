@@ -21,10 +21,17 @@ public class ArtikelController {
     }
 
     @PostMapping
-    public Artikel neuerArtikel(@RequestBody Artikel artikel) {
+    public ResponseEntity<Artikel> neuerArtikel(@RequestBody Artikel artikel) {
         System.out.println("New article Post Request with articleName: " + artikel.getArticleName());
-        ArtikelValidator.validatePostInputParameter(artikel);
-        return artikelService.erstelleArtikel(artikel);
+        try {
+            ArtikelValidator.validatePostInputParameter(artikel);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Validation failed: " + e.getMessage());
+            return null;
+        }
+        artikelService.erstelleArtikel(artikel);
+        return ResponseEntity.ok(artikel);
     }
 
     @GetMapping
@@ -40,10 +47,16 @@ public class ArtikelController {
     }
 
     @DeleteMapping("/{id}")
-    public String loescheArtikel(@PathVariable Long id) {
+    public ResponseEntity<String> loescheArtikel(@PathVariable Long id) {
         System.out.println("New Delete Request for article with id: " + id);
-        artikelService.loescheArtikel(id);
-        return "Artikel mit ID " + id + " wurde gelöscht.";
+        try {
+            artikelService.loescheArtikel(id);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Validation failed: " + e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok("Artikel mit ID " + id + " wurde gelöscht.");
     }
 
     @PutMapping("")
@@ -56,7 +69,6 @@ public class ArtikelController {
             System.out.println("Validation failed: " + e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
         artikelService.updateArtikel(updatedArtikel);
         return ResponseEntity.ok("Artikel aktualisiert.");
     }
