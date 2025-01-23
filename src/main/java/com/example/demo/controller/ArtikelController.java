@@ -80,4 +80,9 @@ public class ArtikelController {
         artikelService.patchArtikel(updatedArtikel);
         return ResponseEntity.ok("Artikel aktualisiert.");
     }
+
+    @GetMapping("/ohne-Bestand")
+    public List<Artikel> findeArtikelOhneBestand (){
+        return artikelService.findeArtikelMitKeinemLagerbestand();
+    }
 }

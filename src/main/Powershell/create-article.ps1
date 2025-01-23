@@ -3,10 +3,10 @@ $apiUrl = "http://localhost:8080/artikel"
 
 # JSON-Daten für den neuen Artikel
 $jsonData = @{
-    articleName = "Bildschirm"
+    articleName = "Laptop"
     price = 500.00
-    stock = 45
-    weight = 3.00
+    stock = 0
+    weight = 2.00
 } | ConvertTo-Json -Depth 1
 
 try {

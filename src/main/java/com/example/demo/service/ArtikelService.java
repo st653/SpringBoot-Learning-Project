@@ -102,4 +102,8 @@ public class ArtikelService {
                 .orElseThrow(() -> new ResourceNotFoundException("Artikel nicht gefunden"));
     }
 
+    public List<Artikel> findeArtikelMitKeinemLagerbestand (){
+        return artikelRepository.findByStock(0);
+    }
+
 }
