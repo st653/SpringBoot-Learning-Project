@@ -106,4 +106,8 @@ public class ArtikelService {
         return artikelRepository.findByStock(0);
     }
 
+    public List<Artikel> findeArtikelMitLagerbestandZwischen(int minStock, int maxStock){
+        return artikelRepository.findArtikelByStockBetween(minStock, maxStock);
+    }
+
 }

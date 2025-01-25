@@ -5,7 +5,7 @@ $apiUrl = "http://localhost:8080/artikel"
 $jsonData = @{
     articleName = "Laptop"
     price = 500.00
-    stock = 0
+    stock = 12
     weight = 2.00
 } | ConvertTo-Json -Depth 1
 

@@ -13,5 +13,5 @@ try
 }
 catch {
     # Fehlerbehandlung
-    Write-Output "Fehler beim Anlegen des Artikels: $_"
+    Write-Output "Fehler beim finden von Artikeln ohne Bestand: $_"
 }

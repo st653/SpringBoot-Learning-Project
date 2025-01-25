@@ -85,4 +85,9 @@ public class ArtikelController {
     public List<Artikel> findeArtikelOhneBestand (){
         return artikelService.findeArtikelMitKeinemLagerbestand();
     }
+
+    @GetMapping("/bestand-bereich")
+    public List<Artikel> findeArtikelMitBestandBereich(@RequestParam int minStock, @RequestParam int maxStock) {
+        return artikelService.findeArtikelMitLagerbestandZwischen(minStock, maxStock);
+    }
 }
