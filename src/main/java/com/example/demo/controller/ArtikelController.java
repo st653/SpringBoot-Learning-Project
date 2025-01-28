@@ -21,17 +21,17 @@ public class ArtikelController {
     }
 
     @PostMapping
-    public ResponseEntity<Artikel> neuerArtikel(@RequestBody Artikel artikel) {
+    public ResponseEntity<String> neuerArtikel(@RequestBody Artikel artikel) {
         System.out.println("New article Post Request with articleName: " + artikel.getArticleName());
         try {
             ArtikelValidator.validatePostInputParameter(artikel);
         }
         catch (IllegalArgumentException e) {
             System.out.println("Validation failed: " + e.getMessage());
-            return null;
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
         artikelService.erstelleArtikel(artikel);
-        return ResponseEntity.ok(artikel);
+        return ResponseEntity.ok("Neuer Artikel erstellt: Name: " + artikel.getArticleName() + ", Preis: " + artikel.getPrice() + ", Bestand: " + artikel.getStock() + ", Gewicht: " + artikel.getWeight());
     }
 
     @GetMapping
@@ -43,7 +43,7 @@ public class ArtikelController {
     @GetMapping("/{id}")
     public Artikel artikelNachId(@PathVariable Long id) {
         System.out.println("New Get Request for article with id: " + id);
-        return artikelService.findeArtikelNachId(id);
+        return artikelService.findeArtikelNachId(id); //Fehlerbehandlung fehlt
     }
 
     @DeleteMapping("/{id}")
