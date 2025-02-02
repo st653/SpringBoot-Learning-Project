@@ -14,6 +14,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -71,13 +73,16 @@ public class ArtikelControllerTest {
     @Test
     void shouldReturnAllArticles() {
         //given
+        List<Artikel> artikelList = List.of(artikel);
 
         //when
+        when(artikelService.alleArtikelAbrufen()).thenReturn(artikelList);
 
         //act
-        artikelController.alleArtikel();
+        List<Artikel> result = artikelController.alleArtikel();
 
         //assert
+        assertEquals(1, result.size());
         verify(artikelService, times(1)).alleArtikelAbrufen();
     }
 }
