@@ -121,5 +121,116 @@ public class ArtikelControllerTest {
         verify(artikelService, times(1)).loescheArtikel(1L);
     }
 
+    // Checks if an article is updated and returns ok
+    @Test
+    void shouldUpdateArticle_ShouldReturnOk() {
+        //given
+        Artikel updatedArtikel = new Artikel("Bildschirm", 600.0, 10, 2.0);
+        updatedArtikel.setId(1L);
 
+        //when
+
+        //act
+        ResponseEntity<String> response = artikelController.updateArtikel(updatedArtikel);
+
+        //assert
+        assertEquals(200, response.getStatusCodeValue());
+        assertTrue(response.getBody().contains("Artikel aktualisiert"));
+
+        verify(artikelService, times(1)).updateArtikel(any(Artikel.class));
+    }
+
+    // Checks if article update returns bad request
+    @Test
+    void shouldNotUpdateArticle_returnsBadRequest() {
+        //given
+        Artikel updatedArtikel = new Artikel(null, -30.0, 10, 2.0);
+        updatedArtikel.setId(1L);
+
+        //when
+
+        //act
+        ResponseEntity<String> response = artikelController.updateArtikel(updatedArtikel);
+
+        //assert
+        assertEquals(400, response.getStatusCodeValue());
+        assertTrue(response.getBody().contains(ArtikelValidator.PREIS_MUSS_GROESSER_ODER_GLEICH_0_SEIN));
+
+        verify(artikelService, never()).updateArtikel(any(Artikel.class));
+    }
+
+    // Checks if an article is patched and returns ok
+    @Test
+    void shouldPatchArticle_ShouldReturnOk() {
+        //given
+        Artikel updatedArtikel = new Artikel(null, null, 10, 2.0);
+        updatedArtikel.setId(1L);
+
+        //when
+
+        //act
+        ResponseEntity<String> response = artikelController.patchArtikel(updatedArtikel);
+
+        //assert
+        assertEquals(200, response.getStatusCodeValue());
+        assertTrue(response.getBody().contains("Artikel aktualisiert"));
+
+        verify(artikelService, times(1)).patchArtikel(any(Artikel.class));
+    }
+
+    // Checks if article update returns bad request
+    @Test
+    void shouldNotPatchArticle_returnsBadRequest() {
+        //given
+        Artikel updatedArtikel = new Artikel(null, -30.0, 10, 2.0);
+        updatedArtikel.setId(1L);
+
+        //when
+
+        //act
+        ResponseEntity<String> response = artikelController.patchArtikel(updatedArtikel);
+
+        //assert
+        assertEquals(400, response.getStatusCodeValue());
+        assertTrue(response.getBody().contains(ArtikelValidator.PREIS_MUSS_GROESSER_ODER_GLEICH_0_SEIN));
+
+        verify(artikelService, never()).updateArtikel(any(Artikel.class));
+    }
+
+    // Checks if an article with no stock is returned
+    @Test
+    void shouldReturnArticlesWithNoStock() {
+        //given
+        List<Artikel> artikelList = List.of(artikel);
+        artikel.setStock(0);
+
+        //when
+        when(artikelService.findeArtikelMitKeinemLagerbestand()).thenReturn(artikelList);
+
+        //act
+        List<Artikel> result = artikelController.findeArtikelOhneBestand();
+
+        //assert
+        assertEquals(1, result.size());
+        verify(artikelService, times(1)).findeArtikelMitKeinemLagerbestand();
+    }
+
+    // Checks if articles with stock between a range are returned
+    @Test
+    void shouldReturnArticlesWithStockBetween() {
+        //given
+        List<Artikel> artikelList = List.of(artikel);
+        int minStock = 0;
+        int maxStock = 10;
+
+        //when
+        when(artikelService.findeArtikelMitLagerbestandZwischen(minStock, maxStock)).thenReturn(artikelList);
+
+        //act
+        List<Artikel> result = artikelController.findeArtikelMitBestandBereich(minStock, maxStock);
+
+        //assert
+        assertEquals(1, result.size());
+        verify(artikelService, times(1)).findeArtikelMitLagerbestandZwischen(minStock, maxStock);
+    }
 }
