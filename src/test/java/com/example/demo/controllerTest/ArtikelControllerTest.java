@@ -31,27 +31,41 @@ public class ArtikelControllerTest {
 
     @BeforeEach
     void setUp() {
-        closeable = MockitoAnnotations.openMocks(this);
         validArtikel = new Artikel("Laptop", 500.0, 5, 2.0);
         invalidArtikel = new Artikel("", -50.0, 0, 0.5);
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
-        closeable.close();
     }
 
     // Checks if a new, valid article is saved with http 200 ok
     @Test
     void neuerArtikel_ValidInput_ShouldReturnOk() {
+        //given
+
+        //when
+
+        //act
         ResponseEntity<String> response = artikelController.neuerArtikel(validArtikel);
 
+        //assert
         assertEquals(200, response.getStatusCodeValue());
         assertTrue(response.getBody().contains("Neuer Artikel erstellt"));
 
         verify(artikelService, times(1)).erstelleArtikel(any(Artikel.class));
     }
 
-    //Falsche Parameter in verify(): Das übergebene Artikel-Objekt im Test stimmt nicht mit dem im Controller verwendeten Objekt überein.
-    //ID wird erst beim Speichern generiert?
+    // Checks if a new, invalid article is not saved with http 400 bad request
+    @Test
+    void neuerArtikel_InvalidInput_ShouldReturnBadRequest() {
+        //given
+
+        //when
+
+        //act
+        ResponseEntity<String> response = artikelController.neuerArtikel(invalidArtikel);
+
+        //assert
+        assertEquals(400, response.getStatusCodeValue());
+        assertTrue(response.getBody().contains("Validation failed"));
+
+        verify(artikelService, never()).erstelleArtikel(any(Artikel.class));
+    }
 }
