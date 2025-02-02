@@ -85,4 +85,41 @@ public class ArtikelControllerTest {
         assertEquals(1, result.size());
         verify(artikelService, times(1)).alleArtikelAbrufen();
     }
+
+    // Checks if an article is returned by id
+    @Test
+    void shouldReturnArticleById() {
+        //given
+        artikel.setId(1L);
+
+        //when
+        when(artikelService.findeArtikelNachId(1L)).thenReturn(artikel);
+
+        //act
+        Artikel result = artikelController.artikelNachId(1L);
+
+        //assert
+        assertEquals(1L, result.getId());
+        verify(artikelService, times(1)).findeArtikelNachId(1L);
+    }
+
+    // Checks if an article is deleted by id
+    @Test
+    void shouldDeleteArticleById() {
+        //given
+        artikel.setId(1L);
+
+        //when
+
+        //act
+        ResponseEntity<String> response = artikelController.loescheArtikel(1L);
+
+        //assert
+        assertEquals(200, response.getStatusCodeValue());
+        assertTrue(response.getBody().contains(artikel.getId() + " wurde gelöscht"));
+
+        verify(artikelService, times(1)).loescheArtikel(1L);
+    }
+
+
 }
