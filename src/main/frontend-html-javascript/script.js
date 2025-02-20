@@ -1,37 +1,49 @@
 // URL deines Backends
-const backendUrl = "http://localhost:8080/artikel";
+const articleBackendUrl = "http://localhost:8080/artikel";
+const customerBackendUrl = "http://localhost:8080/kunden";
 
-// Funktion, um Artikel vom Backend abzurufen
-function fetchArtikel() {
-    fetch(backendUrl, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-        .then((response) => {
-        if (!response.ok) {
-            throw new Error("Fehler beim Abrufen der Artikel");
-        }
-        return response.json();
-    })
-        .then((data) => {
-        // Artikel in die HTML-Seite einfügen
-        const artikelList = document.getElementById("artikel-list");
-        artikelList.innerHTML = ""; // Liste leeren
+// Warte bis das HTML-Dokument vollständig geladen wurde
+document.addEventListener("DOMContentLoaded", function () {
+    loadArticleSummary();
+    loadCustomerSummary();
+    loadHeader();
+});
 
-        data.forEach((artikel) => {
-            console.log("Artikel:", artikel); // Prüfen, was in jedem Artikel steckt
-            const listItem = document.createElement("li");
-            listItem.textContent = `ID: ${artikel.id}, Name: ${artikel.articleName}, Preis: ${artikel.price} €, Bestand: ${artikel.stock}, Gewicht: ${artikel.weight} kg`;
-            artikelList.appendChild(listItem);
-        });
-    })
-        .catch((error) => {
-        console.error("Fehler:", error);
-    });
+//Lade den Header
+function loadHeader() {
+    fetch("header.html")
+        .then(response => response.text())
+        .then(data => {
+            document.querySelector("header").innerHTML = data;
+        })
+        .catch(error => console.error("Fehler beim Laden des Headers:", error));
 }
 
-// Artikel beim Laden der Seite abrufen
-document.addEventListener("DOMContentLoaded", fetchArtikel);
+// Lade die Artikelübersicht
+function loadArticleSummary() {
+    fetch(articleBackendUrl)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("totalArticles").textContent = data.length;
 
+            const list = document.getElementById("articleList");
+            list.innerHTML = ""; // Liste leeren
+
+            data.forEach(article => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<strong>${article.articleName}</strong>: ${article.stock}`;
+                list.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error("Fehler beim Laden der Artikel:", error));
+}
+
+// Lade die Kundenübersicht
+function loadCustomerSummary() {
+    fetch(customerBackendUrl)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("totalCustomers").textContent = data.length;
+        })
+        .catch(error => console.error("Fehler beim Laden der Kunden:", error));
+}
