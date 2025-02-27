@@ -4,55 +4,82 @@ body {
     text-align: center;
 }
 
-header {
+.header .header-wrapper {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    overflow: hidden;
     padding: 10px;
     background-color: #333;
     color: white;
 }
 
-.logo-container {
+.header-wrapper {
+    width: 1100px;
+    max-width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.brand-container {
     display: flex;
     align-items: center;
 }
 
 .logo {
-    height: 50px; /* Logo-Größe anpassen */
+    max-width: 50%;
+    height: auto;
     margin-right: 10px;
 }
 
-.company-name {
+.brand {
+    text-align: center;
     font-size: 24px;
     font-weight: bold;
 }
 
+.search {
+ text-align: center;
+}
+
 /* Navigation */
 .nav {
-    margin-left: auto; /* Schiebt die Navigation komplett nach rechts */
+    text-align: right;
+    float: right;
 }
 
-.nav ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.nav ul li {
-    margin-left: 20px; /* Abstand zwischen den Links */
-}
-
-.nav ul li a {
-    text-decoration: none;
+.nav a {
+    float: left;
     color: white;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
     font-size: 18px;
+    line-height: 25px;
+    border-radius: 4px;
     transition: 0.3s;
 }
 
-.nav ul li a:hover {
-    color: #f0a500; /* Hover-Farbe */
+.nav a:hover {
+    color: #f0a500;
+}
+
+.nav a:active {
+    background-color: #f0a500;
+    color: white;
+}
+
+.login-button {
+    justify-content: flex-end;
+    text-align: end;
+    background-color: #f0a500;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 /* Stil für die Formulare */
