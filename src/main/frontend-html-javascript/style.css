@@ -4,22 +4,22 @@ body {
     text-align: center;
 }
 
-.header .header-wrapper {
+.header {
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    overflow: hidden;
-    padding: 10px;
+    justify-content: center;
     background-color: #333;
     color: white;
+    padding: 10px;
 }
 
 .header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 1100px;
     max-width: 100%;
-    padding: 20px;
     margin: 0 auto;
+    padding: 10px;
 }
 
 .brand-container {
@@ -71,15 +71,19 @@ body {
 }
 
 .login-button {
-    justify-content: flex-end;
-    text-align: end;
     background-color: #f0a500;
     color: white;
     border: none;
     padding: 10px 20px;
+    margin-left: max(30px);
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+}
+
+.login-button:hover {
+    color: white !important;
+    background-color: #956805;
 }
 
 /* Stil für die Formulare */
