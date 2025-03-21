@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    margin: 0;
     text-align: center;
 }
 
@@ -9,7 +9,7 @@ body {
     justify-content: center;
     background-color: #333;
     color: white;
-    padding: 10px;
+    padding: 5px;
 }
 
 .header-wrapper {
@@ -18,8 +18,7 @@ body {
     justify-content: space-between;
     width: 1100px;
     max-width: 100%;
-    margin: 0 auto;
-    padding: 10px;
+    padding: 5px;
 }
 
 .brand-container {
