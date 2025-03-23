@@ -69,7 +69,7 @@ body {
     color: white;
 }
 
-.login-button {
+.contact-button {
     background-color: #f0a500;
     color: white;
     border: none;
@@ -80,7 +80,7 @@ body {
     font-size: 16px;
 }
 
-.login-button:hover {
+.contact-button:hover {
     color: white !important;
     background-color: #956805;
 }
@@ -98,13 +98,13 @@ input {
 /* Stil für das Dashboard */
 .dashboard {
     display: flex;
-    justify-content: space-between;
     gap: 20px;
     padding: 20px;
 }
 
 /* Stil für die Sektionen */
 .dashboard-section {
+    justify-content: space-between;
     flex: 1;
     padding: 20px;
     border: 2px solid #ddd;
@@ -116,19 +116,19 @@ input {
 /* Buttons */
 button {
     display: block;
-    width: 100%;
-    margin-top: 10px;
+    width: 30%;
+    margin: 10px auto;
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
+    background-color: #f0a500;
     color: white;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #956805;
 }
 
 .preview-box {
@@ -139,3 +139,60 @@ button:hover {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     text-align: left;
 }
+
+.lorem-ipsum {
+    text-align: left;
+    margin: 20px;
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.footer-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+.footer-nav ul li {
+    display: inline;
+}
+
+.footer-nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-nav ul li a:hover {
+    color: #f0a500;
+}
+
+.footer-info {
+    font-size: 14px;
+}
+

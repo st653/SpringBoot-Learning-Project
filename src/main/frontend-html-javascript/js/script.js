@@ -7,16 +7,27 @@ document.addEventListener("DOMContentLoaded", function () {
     loadArticleSummary();
     loadCustomerSummary();
     loadHeader();
+    loadFooter();
 });
 
 //Lade den Header
 function loadHeader() {
-    fetch("header.html")
+    fetch("../components/header.html")
         .then(response => response.text())
         .then(data => {
             document.querySelector("header").innerHTML = data;
         })
         .catch(error => console.error("Fehler beim Laden des Headers:", error));
+}
+
+// Lade den Footer
+function loadFooter() {
+    fetch("../components/footer.html")
+        .then(response => response.text())
+        .then(data => {
+            document.querySelector("footer").innerHTML = data;
+        })
+        .catch(error => console.error("Fehler beim Laden des Footers:", error));
 }
 
 // Lade die Artikelübersicht
