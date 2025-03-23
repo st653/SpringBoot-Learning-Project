@@ -196,3 +196,7 @@ button:hover {
     font-size: 14px;
 }
 
+.footer-nav ul li .impressum {
+    color: #f0a500 !important;
+}
+
