@@ -78,6 +78,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    width: auto;
 }
 
 .contact-button:hover {
@@ -116,7 +117,7 @@ input {
 /* Buttons */
 button {
     display: block;
-    width: 30%;
+    width: auto;
     margin: 10px auto;
     padding: 10px;
     font-size: 16px;
@@ -143,6 +144,64 @@ button:hover {
 .lorem-ipsum {
     text-align: left;
     margin: 20px;
+}
+
+/* Article page */
+.page-headline {
+    text-align: left;
+    margin: 20px;
+}
+
+/* Articles table */
+#articlesTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#articlesTable th, #articlesTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+#articlesTable th {
+    background-color: #f0a500;
+    color: white;
+}
+
+#articlesTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#articlesTable tr:hover {
+    background-color: #f0a500;
+    color: white;
+}
+
+/* Stil für das Formular */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+form input, form textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 /* Footer */
