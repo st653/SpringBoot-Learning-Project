@@ -21,17 +21,17 @@ public class ArtikelController {
     }
 
     @PostMapping
-    public ResponseEntity<String> neuerArtikel(@RequestBody Artikel artikel) {
+    public ResponseEntity<Artikel> neuerArtikel(@RequestBody Artikel artikel) {
         System.out.println("New article Post Request with articleName: " + artikel.getArticleName());
         try {
             ArtikelValidator.validatePostInputParameter(artikel);
         }
         catch (IllegalArgumentException e) {
             System.out.println("Validation failed: " + e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(null);
         }
         artikelService.erstelleArtikel(artikel);
-        return ResponseEntity.ok("Neuer Artikel erstellt: Name: " + artikel.getArticleName() + ", Preis: " + artikel.getPrice() + ", Bestand: " + artikel.getStock() + ", Gewicht: " + artikel.getWeight());
+        return ResponseEntity.ok(artikel);
     }
 
     @GetMapping

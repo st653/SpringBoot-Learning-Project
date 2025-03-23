@@ -13,7 +13,7 @@
     <h2 class="page-headline">Article Management</h2>
     <div class="dashboard">
     <section class="dashboard-section">
-        <h3>Overview of all articles</h3>
+        <h3>Inventory</h3>
         <div id="articleList">
             <table id="articlesTable">
                 <thead>
@@ -30,9 +30,10 @@
         </div>
 
     </section>
-    <section class="dashboard-section">
-        <h3>Add a New Article</h3>
+    <section class="form-dashboard-section">
         <form id="newArticleForm">
+            <h3>Add a new article</h3>
+
             <label for="articleName">Article Name:</label>
             <input type="text" id="articleName" name="articleName" required><br><br>
 
@@ -43,7 +44,7 @@
             <input type="number" id="articleStock" name="articleStock" min="1" required><br><br>
 
             <label for="articleWeight">Article Weight:</label>
-            <input type="number" id="articleWeight" name="articleWeight" min="1" step="0.01" required><br><br>
+            <input type="number" id="articleWeight" name="articleWeight" step="0.01" required><br><br>
 
             <button type="submit">➕ Add Article</button>
         </form>

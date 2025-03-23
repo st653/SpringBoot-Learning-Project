@@ -29,12 +29,11 @@ function loadFooter() {
 }
 
 function loadArticles() {
+    const tableBody = document.getElementById("articlesTable").getElementsByTagName("tbody")[0];
     fetch(articleBackendUrl)
         .then(response => response.json())
         .then(data => {
-            const tableBody = document.getElementById("articlesTable").getElementsByTagName("tbody")[0];
             tableBody.innerHTML = "";  // Clear existing rows
-
             // Füge jede Artikelzeile zur Tabelle hinzu
             data.forEach(a => {
                 const row = document.createElement("tr");
@@ -48,6 +47,8 @@ function loadArticles() {
             });
         })
         .catch(error => console.error("Fehler beim Laden:", error));
+
+    console.log('Articles loaded' + tableBody.rows.length);
 }
 
 document.getElementById('newArticleForm').addEventListener('submit', function(event) {
@@ -66,8 +67,33 @@ document.getElementById('newArticleForm').addEventListener('submit', function(ev
     console.log('Weight: ' + articleWeight);
 
     // Hier kannst du dann den Artikel an eine API senden (z.B. mit Fetch oder Axios)
+    fetch(articleBackendUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            articleName: articleName,
+            price: articlePrice,
+            stock: articleStock,
+            weight: articleWeight
+        }),
+    })
+        .then(response => {
+                return response.json()
+            })
+        .then(data => {
+            console.log('Success:', data);
+            loadArticles();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 
-    // Optional: Formular zurücksetzen nach dem Absenden
+    // Formular zurücksetzen nach dem Absenden
     document.getElementById('newArticleForm').reset();
+
+    // Tabelle neu laden
+    loadArticles();
 });
 
